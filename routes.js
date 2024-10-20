@@ -13,6 +13,7 @@ function getAllproducts(req,res){
         }
         res.writeHead(200, {"content-type": "application/json"})
         res.end(products)
+        
     
     })
 
@@ -20,7 +21,7 @@ function getAllproducts(req,res){
 
 // GET SINGLE PRODUCT BY ID
 function getProductById(products, id){ 
-    return products.find(prod => prod.id == id)
+    return products.findIndex(prod => prod.id == id)
 }
 
 // UPDATE A PRODUCT
@@ -63,36 +64,51 @@ function updateProduct(req, res){
         })
     })
 }
-// function getProduct(req, res){
-//    let body = []
-//    req.on("data", (chunk)=>{
-//     body.push(chunk)
-//    })
-//    req.on("end", ()=>{
-//     const parsedBody = Buffer.concat(body).toString()
-//     const bodyObj = JSON.parse(parsedBody)
-//     const id = bodyObj.id
-//     fs.readFile(filePath, "utf8", (err, data)=>{
-//         if(err){
-//             res.writeHead(500, {"content-type":"text/plain"} )
-//             res.end(JSON.stringify(err))
-//         }
-//         const products = JSON.parse(data)
-//         const product = products.find(prod => prod.id == id)
-//         if(!product){
-//             res.writeHead(404, {"content-type":"text/plain"})
-//             res.end("product not found")
 
-//         }
-//         res.writeHead(200, {"content-type":"application/json"})
-//         res.end(product)
-//     })    
-//    })
-// }
+// POST A PRODUCT
+function addProduct(req, res){
+   let body = []
+   req.on("data", (chunk)=>{
+        body.push(chunk)
+   })
+   req.on("end", ()=>{
+        const parsedBody = Buffer.concat(body).toString()
+        if(!parsedBody){
+            res.writeHead(422)
+            res.end("no product data was added")
+        } else{
+            let newProduct = JSON.parse(parsedBody)
+        
+            fs.readFile(filePath, "utf8", (err, data)=>{
+                if(err){
+                    res.writeHead(500, {"content-type":"text/plain"} )
+                    res.end(JSON.stringify(err))
+                }
+                const products = JSON.parse(data)
+
+                let lastProductId = products[products.length-1].id
+                let newProductId = lastProductId + 1
+                newProduct = {...newProduct, id:newProductId}
+                products.push(newProduct)
+
+                fs.writeFile(filePath, JSON.stringify(products), (err)=>{
+                    if(err){
+                        res.writeHead(500, {"content-type":"application/type"})
+                        res.end(JSON.stringify({message:"unable to write to file"}))
+                    }
+                    res.writeHead(201, {"content-type":"application/json"})
+                    res.end("product was successfully added")
+                })
+            }) 
+        }   
+   })
+       
+}
 
 module.exports = {
     getAllproducts,
     getProductById,
     updateProduct,
+    addProduct,
     filePath
 }

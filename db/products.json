@@ -1,6 +1,1 @@
-[
-  { "name": "Roca wear jacket", "price": 2000, "size": "large(l)", "id": 1 },
-  { "name": "Gucci hoodie", "price": 5000, "size": "small(s)", "id": 2 },
-  { "name": "Gucci pants", "price": 3000, "size": "medium(m)", "id": 3 },
-  { "name": "Nike hoodie", "price": 750, "size": "large(l)", "id": 4 }
-]
+[{"name":"Roca wear jacket","price":2000,"size":"large(l)","id":1},{"name":"Gucci hoodie","price":5000,"size":"small(s)","id":2},{"name":"Gucci pants","price":3000,"size":"medium(m)","id":3},{"name":"Nike hoodie","price":750,"size":"large(l)","id":4},{"name":"Gucci winter jacket","price":2500,"size":"large(l)","id":5},{"name":"addidas jacket","price":450,"size":"small(s)","id":6},{"name":"Levi denim jacket","price":150,"size":"medium(m)","id":7},{"name":"supreme hoodie","price":780,"size":"large(l)","id":8}]
